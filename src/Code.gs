@@ -19,18 +19,6 @@ function start() {
     SpreadsheetApp.getUi().showSidebar(ui);
 }
 
-/**
- * Gets data for a single fact.
- * @param {String} url API endpoint URL.
- * @param {String} dataContainer Element containing data.
- * @param {String} token Optional auth token to issue with request.
- * @return {Number} The fact.
- * @customFunction
- */
-function GET(url, dataContainer, token) {
-    return 0.00;
-}
-
 function include(filename) {
     return HtmlService.createHtmlOutputFromFile(filename)
         .getContent();
