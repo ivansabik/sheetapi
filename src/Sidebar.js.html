@@ -22,11 +22,15 @@
 
     function getResponseObjectAsArray(object) {
         try {
-            var dataElementKey = $('#dataElement').val();
+            var dataElementKeys = $('#dataElement').val();
             var dataElement;
             // Get specified element or directly response object
-            if (dataElementKey) {
-                dataElement = object[dataElementKey];
+            if (dataElementKeys) {
+                var currentObject = object;
+                dataElementKeys.split('=>').forEach(function(item) {
+                  dataElement = currentObject[item];
+                  currentObject = dataElement;
+                })
             } else {
                 dataElement = object;
             }
