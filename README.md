@@ -3,4 +3,4 @@
 
 Google spreadsheet add-on to get data from REST APIs
 
-<img src="https://raw.githubusercontent.com/ivansabik/sheetapi/master/doc/screenshot.png"/>
+<img width="500px" src="https://raw.githubusercontent.com/ivansabik/sheetapi/master/doc/screenshot.png"/>
