@@ -3,54 +3,39 @@
 
 <?!= include('Sidebar.css.html'); ?>
 
-<h3>1. Get an access token</h3>
-
-<p>
-    Put in your credentials to get a token. Optionally input directly and then save the auth token to be used to make the API calls.
-</p>
-
-<div class="form-group">
-    <label for="authEndpoint">API auth URL</label>
-    <input type="text" id="authEndpoint" placeholder="Ex. http://localhost/api/v1/auth" size="30"/>
-</div>
-<div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" id="username" placeholder="Ex. youruser" />
-</div>
-<div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" id="password" placeholder="Ex. yoursecretpass" />
-</div>
-
-<p>
-    <button class="action">Get token</button>
-</p>
-
-<div class="form-group">
-    <label for="token">Auth token</label>
-    <br>
-    <textarea rows="4" cols="30" id="token" placeholder="Ex. eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."></textarea>
-</div>
-
-<p>
-    <button class="action">Save token</button>
-</p>
-
-<h3>2. Get data from an API</h3>
+<h3>Data source</h3>
 
 <div class="form-group">
     <label for="url">API URL</label>
-    <input type="text" id="url" placeholder="Ex. http://localhost/api/v1/users" size="30"/>
+    <input type="text" id="url" placeholder="Ex. http://localhost/api/v1/users" size="36" />
 </div>
-
+<div class="form-group">
+    <label for="requestBody">Optional JSON body</label>
+    <br>
+    <textarea rows="3" cols="35" id="requestBody" placeholder="Ex. {token: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&quot;.}"></textarea>
+</div>
 <div class="form-group">
     <label for="dataElement">Response element with data</label>
-    <input type="text" id="dataElement" placeholder="Ex. results" size="30"/>
+    <input type="text" id="dataElement" placeholder="Ex. results" size="36" />
+</div>
+<br>
+<div class="form-group">
+    <select id="targetSheet">
+        <option value="this" selected>Insert results in this sheet</option>
+        <option value="new">Create new sheet for results</option>
+    </select>
 </div>
 
 <p>
     <button class="action" id="getData">Get data</button>
 </p>
+
+<h3>Response from API</h3>
+
+<div class="form-group">
+    <textarea rows="15" cols="35" id="apiResponse" placeholder="Specify data source and click on &quot;Get data&quot; to get response from API" readonly></textarea>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>

@@ -5,39 +5,47 @@
 
     function getData() {
         var url = $('#url').val();
+        $('#apiResponse').val('Please wait...');
         google.script.run.withSuccessHandler(onGetDataSuccess).getDataFromApi(url);
     }
 
     function onGetDataSuccess(data) {
         var jsonData = jQuery.parseJSON(data);
-        jsonData = getResponseObject(jsonData);
-        removeNonSimpleTypesFromObject(jsonData);
-        var csv = getCsv(jsonData);
-        window.alert(csv);
-    }
-
-    function getResponseObject(object) {
-        var dataElementKey = $('#dataElement').val();
-        if (dataElementKey) {
-            return object[dataElementKey];
-        } else {
-            return object;
+        jsonData = getResponseObjectAsArray(jsonData);
+        var targetSheetIsCurrentSheet = false;
+        if ($('#targetSheet').val() == 'this') {
+            targetSheetIsCurrentSheet = true;
         }
+        $('#apiResponse').val(data);
+        google.script.run.createSpreadsheet(getDataArray(jsonData), targetSheetIsCurrentSheet);
     }
 
-    function removeNonSimpleTypesFromObject(object) {
-        Object.keys(object).forEach(function(key) {
-            if (typeof object[key] == 'object') {
-                delete object[key];
+    function getResponseObjectAsArray(object) {
+        try {
+            var dataElementKey = $('#dataElement').val();
+            var dataElement;
+            // Get specified element or directly response object
+            if (dataElementKey) {
+                dataElement = object[dataElementKey];
+            } else {
+                dataElement = object;
             }
-        });
+            // Need to put all objects as array, check it it's already
+            if (dataElement.constructor === Array) {
+                return dataElement;
+            } else {
+                return [dataElement];
+            }
+        } catch (err) {
+            return [{
+                error: 'Could not parse response',
+                response: JSON.stringify(object)
+            }]
+        }
     }
 
-    function getCsv(object) {
-        if (object.constructor === Array) {
-            return Papa.unparse(object);
-        } else {
-            return Papa.unparse([object]);
-        }
+    function getDataArray(object) {
+        var csv = Papa.unparse(object);
+        return Papa.parse(csv).data;
     }
 </script>

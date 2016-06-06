@@ -3,4 +3,4 @@
 
 Google spreadsheet add-on to get data from REST APIs
 
-<img width="500px" src="http://s33.postimg.org/v1ncy5d59/screenshot.png"/>
+<img width="600px" src="http://g.recordit.co/eersP3xKmv.gif"/>

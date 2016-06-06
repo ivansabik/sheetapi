@@ -37,7 +37,23 @@ function include(filename) {
 }
 
 function getDataFromApi(apiUrl) {
-    var response = UrlFetchApp.fetch(apiUrl);
+    var response = UrlFetchApp.fetch(apiUrl, {
+        muteHttpExceptions: true
+    });
     Logger.log(response);
     return response.getContentText();
+}
+
+function createSpreadsheet(dataArray, currentSheet) {
+    Logger.log(dataArray);
+    var name = appName + '_' + new Date().getTime();
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    if(currentSheet) {
+      sheet.getActiveSheet().clear();
+    } else {
+      sheet.insertSheet(name);
+    }
+    dataArray.forEach(function(item, index, arr) {
+        sheet.appendRow(item);
+    });
 }
