@@ -1,0 +1,43 @@
+<script>
+    $(function() {
+        $('#getData').bind('click', getData);
+    });
+
+    function getData() {
+        var url = $('#url').val();
+        google.script.run.withSuccessHandler(onGetDataSuccess).getDataFromApi(url);
+    }
+
+    function onGetDataSuccess(data) {
+        var jsonData = jQuery.parseJSON(data);
+        jsonData = getResponseObject(jsonData);
+        removeNonSimpleTypesFromObject(jsonData);
+        var csv = getCsv(jsonData);
+        window.alert(csv);
+    }
+
+    function getResponseObject(object) {
+        var dataElementKey = $('#dataElement').val();
+        if (dataElementKey) {
+            return object[dataElementKey];
+        } else {
+            return object;
+        }
+    }
+
+    function removeNonSimpleTypesFromObject(object) {
+        Object.keys(object).forEach(function(key) {
+            if (typeof object[key] == 'object') {
+                delete object[key];
+            }
+        });
+    }
+
+    function getCsv(object) {
+        if (object.constructor === Array) {
+            return Papa.unparse(object);
+        } else {
+            return Papa.unparse([object]);
+        }
+    }
+</script>

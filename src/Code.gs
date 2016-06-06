@@ -35,3 +35,9 @@ function include(filename) {
     return HtmlService.createHtmlOutputFromFile(filename)
         .getContent();
 }
+
+function getDataFromApi(apiUrl) {
+    var response = UrlFetchApp.fetch(apiUrl);
+    Logger.log(response);
+    return response.getContentText();
+}
